@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>D&D Character Sheet – Вход</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="tabs">
+                <button class="tab-btn active" id="login-tab">Вход</button>
+                <button class="tab-btn" id="register-tab">Регистрация</button>
+            </div>
+
+            <!-- Форма входа -->
+            <form id="login-form" class="auth-form active">
+                <h2>Вход</h2>
+                <input type="text" id="login-username" placeholder="Имя пользователя" required>
+                <input type="password" id="login-password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+                <div class="error-message" id="login-error"></div>
+            </form>
+
+            <!-- Форма регистрации -->
+            <form id="register-form" class="auth-form">
+                <h2>Регистрация</h2>
+                <input type="text" id="reg-username" placeholder="Имя пользователя" required>
+                <input type="email" id="reg-email" placeholder="Email" required>
+                <input type="password" id="reg-password" placeholder="Пароль" required>
+                <button type="submit">Зарегистрироваться</button>
+                <div class="error-message" id="register-error"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+    <script>
+        // Переключение табов
+        document.getElementById('login-tab').addEventListener('click', () => {
+            document.getElementById('login-tab').classList.add('active');
+            document.getElementById('register-tab').classList.remove('active');
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('register-form').classList.remove('active');
+        });
+        document.getElementById('register-tab').addEventListener('click', () => {
+            document.getElementById('register-tab').classList.add('active');
+            document.getElementById('login-tab').classList.remove('active');
+            document.getElementById('register-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
