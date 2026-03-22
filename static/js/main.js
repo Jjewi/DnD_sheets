@@ -1,5 +1,8 @@
 const API_BASE = '';
-
+function isValidEmail(email) {
+    const re = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+    return re.test(email);
+}
 async function apiRequest(endpoint, options = {}) {
     const token = localStorage.getItem('token');
     const headers = {
@@ -59,23 +62,30 @@ if (document.getElementById('login-form')) {
     });
 
     document.getElementById('register-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const username = document.getElementById('reg-username').value;
-        const email = document.getElementById('reg-email').value;
-        const password = document.getElementById('reg-password').value;
-        const errorEl = document.getElementById('register-error');
+    e.preventDefault();
+    const username = document.getElementById('reg-username').value;
+    const emailValue = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    const errorEl = document.getElementById('register-error');
 
-        try {
-            await apiRequest('/users/register', {
-                method: 'POST',
-                body: JSON.stringify({ username, email, password }),
-            });
-            alert('Регистрация успешна! Теперь войдите.');
-            document.getElementById('login-tab').click();
-        } catch (err) {
-            errorEl.textContent = err.message;
-        }
-    });
+    // Простая валидация email
+    const isValidEmail = (email) => /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
+    if (!isValidEmail(emailValue)) {
+        errorEl.textContent = 'Введите корректный email (например, name@domain.ru)';
+        return;
+    }
+
+    try {
+        await apiRequest('/users/register', {
+            method: 'POST',
+            body: JSON.stringify({ username, email: emailValue, password }),
+        });
+        alert('Регистрация успешна! Теперь войдите.');
+        document.getElementById('login-tab').click();
+    } catch (err) {
+        errorEl.textContent = err.message;
+    }
+});
 }
 // Страница дашборда
 if (document.getElementById('characters-list')) {

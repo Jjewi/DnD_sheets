@@ -1,11 +1,11 @@
-from pydantic import BaseModel, computed_field, field_validator
+from pydantic import BaseModel, computed_field, field_validator, EmailStr
 from typing import Optional, Dict, Any, List
 from .utils.level_table import calculate_level, calculate_proficiency_bonus
 
 # юзер
 class UserBase(BaseModel):
     username: str
-    email: str
+    email: EmailStr
 
 class UserCreate(UserBase):
     password: str
