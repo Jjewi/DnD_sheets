@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from .routers import users, characters
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 app = FastAPI(title="D&D Character Sheet")
 
@@ -11,4 +13,4 @@ app.include_router(characters.router)
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return FileResponse("static/index.html")

@@ -1,4 +1,3 @@
-# app/schemas.py
 from pydantic import BaseModel, computed_field, field_validator
 from typing import Optional, Dict, Any, List
 from .utils.level_table import calculate_level, calculate_proficiency_bonus
@@ -148,11 +147,17 @@ class Character(CharacterBase):
             "sleight_of_hand": "dexterity",
             "survival": "wisdom"
         }
-        skills = self.details.get("skills", {})
+        skills_data = self.details.get("skills", {})
         result = {}
         for skill, ability in skill_to_ability.items():
-            proficient = skills.get(skill, {}).get("proficient", False)
-            extra_bonus = skills.get(skill, {}).get("bonus", 0)
+            skill_info = skills_data.get(skill, {})
+            if isinstance(skill_info, dict):
+                proficient = skill_info.get("proficient", False)
+                extra_bonus = skill_info.get("bonus", 0)
+            else:
+                proficient = False
+                extra_bonus = int(skill_info) if isinstance(skill_info, (int, float)) else 0
+
             modifier = getattr(self, f"{ability}_modifier")
             bonus = modifier + (self.proficiency_bonus if proficient else 0) + extra_bonus
             result[skill] = bonus

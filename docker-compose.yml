@@ -29,7 +29,7 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/dnd_db
-      SECRET_KEY: "super-secret-key-change-in-production"   # измените на реальный ключ
+      SECRET_KEY: "DnDpass"
     depends_on:
       db:
         condition: service_healthy
