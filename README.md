@@ -31,7 +31,7 @@ Async REST API with a web interface for creating and managing Dungeons & Dragons
 ```bash
 git clone https://github.com/Jjewi/DnD_sheets.git
 cd DnD_sheets
-cp .env.example .env    # fill in your values
+cp .env.example .env    
 docker-compose up --build
 ```
 
